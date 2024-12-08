@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { UserButton } from "@clerk/nextjs";
+import CreateNoteDialog from "@/components/CreateNoteDialog";
 import { FaArrowLeft } from "react-icons/fa6";
 // import Image from "next/image";
 import Link from "next/link";
@@ -10,8 +11,6 @@ import React from "react";
 type Props = {};
 
 const DashboardPage = async (props: Props) => {
-
-
   return (
     <>
       <div className="min-h-screen">
@@ -39,6 +38,10 @@ const DashboardPage = async (props: Props) => {
           {/* if no notes, display this */}
             <div className="text-center">
               <h2 className="text-xl text-gray-500">You have no notes yet.</h2>
+            </div>
+            {/* display all the notes */}
+            <div className="grid sm:grid-cols-3 md:grid-cols-5 grid-cols-1 gap-3">
+            <CreateNoteDialog/>
             </div>
         </div>
       </div>
