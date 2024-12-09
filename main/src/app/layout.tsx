@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
+import Provider from "@/components/Provider";
 
 export const metadata: Metadata = {
   title: "Notion-Clone",
@@ -14,11 +15,13 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-    <html lang="en"  suppressHydrationWarning>
-      <body>
-        {children}
-      </body>
-    </html>
+      <html lang="en" suppressHydrationWarning>
+        <Provider>
+          <body>
+            {children}
+          </body>
+        </Provider>
+      </html>
     </ClerkProvider>
   );
 }
