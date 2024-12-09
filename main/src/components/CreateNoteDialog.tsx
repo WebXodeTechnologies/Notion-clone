@@ -12,13 +12,44 @@ import { Loader2, Plus } from "lucide-react";
 import { Input } from "./ui/input";
 import axios from "axios";
 import { Button } from "./ui/button";
+import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
 type Props = {};
 
 const CreateNoteDialog = (props: Props) => {
-  const router = useRouter();
+  // const router = useRouter();
   const [input, setInput] = React.useState("");
+
+  const createNotebook = useMutation({
+    mutationFn: async () => {
+      const response = await axios.post("/api/createNoteBook", {
+        name: input,
+      });
+      console.log(response.data);
+      return response.data;
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (input === "") {
+      window.alert("Please enter a name for your notebook");
+      return;
+    }
+    createNotebook.mutate(undefined, {
+      onSuccess: () => {
+        console.log('new note created');
+      },
+      onError: (error) => {
+        console.error(error);
+        window.alert("Failed to create new notebook");
+      },
+    });
+  };
+
+
+
   return (
     <Dialog>
       <DialogTrigger>
@@ -36,7 +67,7 @@ const CreateNoteDialog = (props: Props) => {
             You can create a new note by clicking the button below.
           </DialogDescription>
         </DialogHeader>
-        <form>
+        <form onSubmit={handleSubmit}>
           <Input
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -49,7 +80,12 @@ const CreateNoteDialog = (props: Props) => {
             </Button>
             <Button
               type="submit"
-              className="bg-green-600">
+              className="bg-green-600"
+              // disabled={createNotebook.isLoading}
+            >
+              {/* {createNotebook.isLoading && (
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              )} */}
               Create
             </Button>
           </div>
