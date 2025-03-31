@@ -1,7 +1,6 @@
 import { TypewriterTitle } from "@/components/TypewritterTittle";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-
 import { FaArrowRight } from "react-icons/fa6";
 
 export default function Home() {
